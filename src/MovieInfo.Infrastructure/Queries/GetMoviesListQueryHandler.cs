@@ -1,5 +1,4 @@
-﻿//using Infrastructure.Queries;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MovieInfo.Queries.Movies;
 
 namespace MovieInfo.Infrastructure.Queries

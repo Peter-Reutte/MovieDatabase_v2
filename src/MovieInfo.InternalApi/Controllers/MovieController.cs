@@ -1,5 +1,4 @@
-﻿//using Infrastructure.Queries;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MovieInfo.Domain.Movies;
 using MovieInfo.InternalApi.Models;
 using MovieInfo.Queries.Movies;

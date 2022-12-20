@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MovieInfo.Queries.Movies;
 
-namespace MovieInfo.Queries.Movies
+public sealed class MovieView
 {
-    public sealed class MovieView
-    {
-        public string Title { get; set; } = null!;
+    public string Title { get; set; } = null!;
 
+    public int Rating { get; set; }
 
-        public int Rating { get; set; }
-
-        public double Score { get; set; }
-    }
+    public double Score { get; set; }
 }
