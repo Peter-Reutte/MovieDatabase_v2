@@ -5,6 +5,8 @@ namespace MovieInfo.InternalApi.Models;
 public sealed class CreateMovieBinding
 {
     public string Title { get; set; } = null!;
+
+    public string Description { get; set; } = null!;
 }
 
 public sealed class CreateMovieBindingValidator : AbstractValidator<CreateMovieBinding>

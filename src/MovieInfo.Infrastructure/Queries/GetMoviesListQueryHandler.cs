@@ -22,6 +22,7 @@ namespace MovieInfo.Infrastructure.Queries
                     Rating = m.Rating,
                     Score = m.Score,
                 })
+                .OrderBy(m => m.Title)
                 .ToListAsync(cancellationToken);
         }
     }

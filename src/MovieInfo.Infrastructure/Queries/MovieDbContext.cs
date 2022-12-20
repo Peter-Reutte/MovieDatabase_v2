@@ -20,7 +20,9 @@ public sealed class MovieDbContext : DbContext
             builder.HasKey(m => m.Id);
             builder.Property(m => m.Title).IsRequired();
             builder.Property(m => m.Rating).IsRequired();
-            builder.Property(m => m.Score).IsRequired();
+            builder.Property(m => m.Score).IsRequired(); 
+            builder.Property(m => m.RealeseDate).IsRequired();
+            builder.Property(m => m.Description).IsRequired();
         });
     }
 }
@@ -34,4 +36,8 @@ public sealed class Movie
     public int Rating { get; private set; }
 
     public double Score { get; private set; }
+
+    public DateTime RealeseDate { get; set; }
+
+    public string Description { get; set; } = null!;
 }

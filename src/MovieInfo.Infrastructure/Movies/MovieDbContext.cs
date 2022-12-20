@@ -22,6 +22,9 @@ public sealed class MovieDbContext : DbContext
             builder.HasKey(m => m.Id);
             builder.Property(m => m.Title).IsRequired();
             builder.Property(m => m.Rating).IsRequired();
+            builder.Property(m => m.Score).IsRequired();
+            builder.Property(m => m.RealeseDate).IsRequired();
+            builder.Property(m => m.Description).IsRequired();
             builder.Property(m => m.ConcurrencyToken).IsRequired().IsConcurrencyToken();
         });
     }

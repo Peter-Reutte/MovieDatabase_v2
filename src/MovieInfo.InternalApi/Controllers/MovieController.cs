@@ -20,7 +20,7 @@ public sealed class MovieController : ControllerBase
         [FromBody] CreateMovieBinding binding,
         [FromServices] IMovieRepository repository)
     {
-        var movie = new Movie(binding.Title);
+        var movie = new Movie(binding.Title, binding.Description);
 
         await repository.Save(movie);
 
@@ -36,8 +36,10 @@ public sealed class MovieController : ControllerBase
     [HttpGet("/movies")]
     public async Task<ActionResult<IEnumerable<MovieReference>>> GetMoviesList(
         CancellationToken cancellationToken,
-        //[FromServices] IQueryProcessor processor
-        [FromServices] Infrastructure.Queries.GetMoviesListQueryHandler handler)
+        [FromServices] Infrastructure.Queries.GetMoviesListQueryHandler handler,
+        [FromQuery] bool byTitle = false,
+        [FromQuery] bool byScore = false,
+        [FromQuery] bool byDate = false)
     {
         var movies = await handler.Handle(new GetMoviesListQuery(), cancellationToken);
 
@@ -55,7 +57,6 @@ public sealed class MovieController : ControllerBase
     public async Task<ActionResult<MovieView>> GetMovie(
         CancellationToken cancellationToken,
         [FromServices] Infrastructure.Queries.GetMovieQueryHandler handler,
-        //[FromServices] IQueryProcessor processor,
         [FromRoute] Guid id)
     {
         var movie = await handler.Handle(new GetMovieQuery(id), cancellationToken);
