@@ -15,7 +15,7 @@ public sealed class MovieRepository : IMovieRepository
     public async Task<Movie?> Get(Guid id, CancellationToken cancellationToken)
     {
         return await _context.Movies
-                .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
+            .SingleOrDefaultAsync(m => m.Id == id, cancellationToken);
     }
 
     public async Task Save(Movie movie)

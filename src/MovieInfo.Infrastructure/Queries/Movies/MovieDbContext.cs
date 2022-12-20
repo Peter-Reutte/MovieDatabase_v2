@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-namespace MovieInfo.Infrastructure.Queries;
+
+namespace MovieInfo.Infrastructure.Queries.Movies;
 
 public sealed class MovieDbContext : DbContext
 {

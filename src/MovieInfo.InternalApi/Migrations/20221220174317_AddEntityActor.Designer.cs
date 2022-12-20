@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MovieInfo.InternalApi;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MovieInfo.InternalApi.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    partial class MovieDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221220174317_AddEntityActor")]
+    partial class AddEntityActor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,19 +79,6 @@ namespace MovieInfo.InternalApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Movie", (string)null);
-                });
-
-            modelBuilder.Entity("MovieInfo.InternalApi.MigrationDbContext+MovieActor", b =>
-                {
-                    b.Property<Guid>("MovieId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ActorId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("MovieId", "ActorId");
-
-                    b.ToTable("MovieActor");
                 });
 #pragma warning restore 612, 618
         }

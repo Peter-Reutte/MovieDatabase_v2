@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieInfo.Queries.Movies;
 
-namespace MovieInfo.Infrastructure.Queries;
+namespace MovieInfo.Infrastructure.Queries.Movies;
 
 public sealed class GetMovieQueryHandler : IQueryHandler<GetMovieQuery, MovieView>
 {

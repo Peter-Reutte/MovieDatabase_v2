@@ -17,7 +17,7 @@ public sealed class MovieController : ControllerBase
     /// <returns></returns>
     [HttpPost("/movies")]
     public async Task<IActionResult> AddMovie(
-        [FromBody] CreateMovieBinding binding,
+        [FromBody] AddMovieBinding binding,
         [FromServices] IMovieRepository repository)
     {
         var movie = new Movie(binding.Title, binding.Description);
@@ -86,6 +86,20 @@ public sealed class MovieController : ControllerBase
             return StatusCode(404);
 
         movie.UpdateScore(binding.Estimate);
+
+        await repository.Save(movie);
+
+        return NoContent();
+    }
+
+
+
+
+    public async Task<IActionResult> AddActor(
+        [FromBody] AddActorBinding binding,
+        [FromServices] IMovieRepository repository)
+    {
+        var movie = new Movie(binding.Title, binding.Description);
 
         await repository.Save(movie);
 

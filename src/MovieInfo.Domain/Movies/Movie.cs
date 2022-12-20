@@ -28,6 +28,9 @@ public sealed class Movie
 
     public Guid ConcurrencyToken { get; set; }
 
+    private List<MovieActor> _actors = new();
+    public IEnumerable<MovieActor> Actors => _actors.AsReadOnly();
+
     public void UpdateScore(int estimate)
     {
         Rating++;

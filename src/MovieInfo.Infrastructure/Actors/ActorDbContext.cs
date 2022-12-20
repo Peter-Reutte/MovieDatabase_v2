@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieInfo.Domain.Movies;
+using MovieInfo.Domain.Actors;
 
-namespace MovieInfo.Infrastructure.Movies;
+namespace MovieInfo.Infrastructure.Actors;
 
-public sealed class MovieDbContext : DbContext
+public sealed class ActorDbContext : DbContext
 {
-    public DbSet<Movie> Movies { get; set; }
+    internal DbSet<Actor> Actors { get; set; }
 
-    public MovieDbContext(DbContextOptions<MovieDbContext> options)
-        : base(options)
+    public ActorDbContext(DbContextOptions<ActorDbContext> options) : base(options)
     { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -55,3 +54,4 @@ public sealed class MovieDbContext : DbContext
         });
     }
 }
+
