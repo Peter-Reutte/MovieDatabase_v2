@@ -41,7 +41,7 @@ public sealed class MovieController : ControllerBase
         [FromQuery] bool sortByScore = false,
         [FromQuery] bool sortByDate = false)
     {
-        var movies = await handler.Handle(new GetMoviesListQuery(bsortByTitle, sortByScore, sortByDate), cancellationToken);
+        var movies = await handler.Handle(new GetMoviesListQuery(sortByTitle, sortByScore, sortByDate), cancellationToken);
 
         return Ok(movies);
     }

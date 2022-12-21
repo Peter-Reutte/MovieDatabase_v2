@@ -39,16 +39,6 @@ public sealed class MigrationDbContext : DbContext
         modelBuilder.Entity<MovieActor>(builder =>
         {
             builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
-
-            //modelBuilder.Entity<MovieActor>()
-            //    .HasOne(pc => pc.Person)
-            //    .WithMany(p => p.PersonClubs)
-            //    .HasForeignKey(pc => pc.PersonId);
-
-            //modelBuilder.Entity<MovieActor>()
-            //    .HasOne(pc => pc.Club)
-            //    .WithMany(c => c.PersonClubs)
-            //    .HasForeignKey(pc => pc.ClubId);
         });
     }
 
