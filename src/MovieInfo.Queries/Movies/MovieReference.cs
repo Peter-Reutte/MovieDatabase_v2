@@ -9,4 +9,8 @@ public sealed class MovieReference
     public int Rating { get; set; }
 
     public double Score { get; set; }
+
+    public DateTime RealeseDate { get; set; }
+
+    public string Description { get; set; } = null!;
 }

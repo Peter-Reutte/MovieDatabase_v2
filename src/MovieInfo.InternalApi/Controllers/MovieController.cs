@@ -36,12 +36,12 @@ public sealed class MovieController : ControllerBase
     [HttpGet("/movies")]
     public async Task<ActionResult<IEnumerable<MovieReference>>> GetMoviesList(
         CancellationToken cancellationToken,
-        [FromServices] Infrastructure.Queries.GetMoviesListQueryHandler handler,
-        [FromQuery] bool byTitle = false,
-        [FromQuery] bool byScore = false,
-        [FromQuery] bool byDate = false)
+        [FromServices] Infrastructure.Queries.Movies.GetMoviesListQueryHandler handler,
+        [FromQuery] bool sortByTitle = false,
+        [FromQuery] bool sortByScore = false,
+        [FromQuery] bool sortByDate = false)
     {
-        var movies = await handler.Handle(new GetMoviesListQuery(), cancellationToken);
+        var movies = await handler.Handle(new GetMoviesListQuery(bsortByTitle, sortByScore, sortByDate), cancellationToken);
 
         return Ok(movies);
     }
@@ -56,7 +56,7 @@ public sealed class MovieController : ControllerBase
     [HttpGet("/movies/{id}")]
     public async Task<ActionResult<MovieView>> GetMovie(
         CancellationToken cancellationToken,
-        [FromServices] Infrastructure.Queries.GetMovieQueryHandler handler,
+        [FromServices] Infrastructure.Queries.Movies.GetMovieQueryHandler handler,
         [FromRoute] Guid id)
     {
         var movie = await handler.Handle(new GetMovieQuery(id), cancellationToken);
@@ -86,20 +86,6 @@ public sealed class MovieController : ControllerBase
             return StatusCode(404);
 
         movie.UpdateScore(binding.Estimate);
-
-        await repository.Save(movie);
-
-        return NoContent();
-    }
-
-
-
-
-    public async Task<IActionResult> AddActor(
-        [FromBody] AddActorBinding binding,
-        [FromServices] IMovieRepository repository)
-    {
-        var movie = new Movie(binding.Title, binding.Description);
 
         await repository.Save(movie);
 

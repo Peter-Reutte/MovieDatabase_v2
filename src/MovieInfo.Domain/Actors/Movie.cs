@@ -16,6 +16,6 @@ public sealed class Movie
 
     public Guid ConcurrencyToken { get; set; }
 
-    private List<MovieActor> _actors = new();
-    public IEnumerable<MovieActor> Actors => _actors.AsReadOnly();
+    private List<Actor> _actors = new();
+    public IEnumerable<Actor> Actors => _actors.AsReadOnly();
 }

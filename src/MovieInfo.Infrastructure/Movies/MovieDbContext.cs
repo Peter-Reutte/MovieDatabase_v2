@@ -26,6 +26,9 @@ public sealed class MovieDbContext : DbContext
             builder.Property(m => m.RealeseDate).IsRequired();
             builder.Property(m => m.Description).IsRequired();
             builder.Property(m => m.ConcurrencyToken).IsRequired().IsConcurrencyToken();
+
+            builder.HasMany(m => m.Actors)
+                .WithMany(a => a.Movies);
         });
 
         modelBuilder.Entity<Actor>(builder =>
@@ -42,16 +45,6 @@ public sealed class MovieDbContext : DbContext
         modelBuilder.Entity<MovieActor>(builder =>
         {
             builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
-
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Movie)
-                .WithMany(m => m.Actors)
-                .HasForeignKey(ma => ma.MovieId);
-
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Actor)
-                .WithMany(a => a.Movies)
-                .HasForeignKey(ma => ma.ActorId);
         });
     }
 }

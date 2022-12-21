@@ -36,21 +36,14 @@ public sealed class ActorDbContext : DbContext
             builder.Property(a => a.Rating).IsRequired();
             builder.Property(a => a.Score).IsRequired();
             builder.Property(a => a.ConcurrencyToken).IsRequired().IsConcurrencyToken();
+
+            builder.HasMany(m => m.Movies)
+                .WithMany(a => a.Actors);
         });
 
         modelBuilder.Entity<MovieActor>(builder =>
         {
             builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
-
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Movie)
-                .WithMany(m => m.Actors)
-                .HasForeignKey(ma => ma.MovieId);
-
-            modelBuilder.Entity<MovieActor>()
-                .HasOne(ma => ma.Actor)
-                .WithMany(a => a.Movies)
-                .HasForeignKey(ma => ma.ActorId);
         });
     }
 }

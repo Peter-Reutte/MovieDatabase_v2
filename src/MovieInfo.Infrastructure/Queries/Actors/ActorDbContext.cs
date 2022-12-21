@@ -1,34 +1,33 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace MovieInfo.Infrastructure.Queries.Movies;
+namespace MovieInfo.Infrastructure.Queries.Actors;
 
-public sealed class MovieDbContext : DbContext
+public sealed class ActorDbContext : DbContext
 {
-    internal DbSet<Movie> Movies { get; set; }
+    internal DbSet<Actor> Actors { get; set; }
 
-    public MovieDbContext(DbContextOptions<MovieDbContext> options) : base(options)
+    public ActorDbContext(DbContextOptions<ActorDbContext> options) : base(options)
     { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Actor>(builder =>
+        {
+            builder.ToTable("Actor");
+            builder.HasKey(a => a.Id);
+
+            builder.HasMany(m => m.MovieActors)
+                .WithOne()
+                .HasPrincipalKey(a => a.Id)
+                .HasForeignKey(ma => ma.ActorId);
+        });
+
         modelBuilder.Entity<Movie>(builder =>
         {
             builder.ToTable("Movie");
             builder.HasKey(m => m.Id);
-
-            builder.HasMany(m => m.MovieActors)
-                .WithOne()
-                .HasPrincipalKey(m => m.Id)
-                .HasForeignKey(ma => ma.MovieId);
-        });
-
-        modelBuilder.Entity<Actor>(builder =>
-        {
-            builder.ToTable("Actor");
-
-            builder.HasKey(a => a.Id);
         });
 
         modelBuilder.Entity<MovieActor>(builder =>
@@ -36,9 +35,9 @@ public sealed class MovieDbContext : DbContext
             builder.ToTable("MovieActor");
             builder.HasKey(ma => new { ma.MovieId, ma.ActorId });
 
-            builder.HasOne(ma => ma.Actor)
+            builder.HasOne(ma => ma.Movie)
                 .WithOne()
-                .HasPrincipalKey<Actor>(a => a.Id)
+                .HasPrincipalKey<Movie>(m => m.Id)
                 .HasForeignKey<MovieActor>(ma => ma.ActorId);
         });
     }
@@ -57,8 +56,6 @@ public sealed class Movie
     public DateTime RealeseDate { get; private set; }
 
     public string Description { get; private set; } = null!;
-
-    public IEnumerable<MovieActor> MovieActors { get; private set; }
 }
 
 public sealed class Actor
@@ -70,6 +67,8 @@ public sealed class Actor
     public int Rating { get; set; }
 
     public double Score { get; set; }
+
+    public IEnumerable<MovieActor> MovieActors { get; private set; }
 }
 
 public sealed class MovieActor
@@ -78,5 +77,5 @@ public sealed class MovieActor
 
     public Guid ActorId { get; set; }
 
-    public Actor Actor { get; set; } = null!;
+    public Movie Movie { get; set; } = null!;
 }

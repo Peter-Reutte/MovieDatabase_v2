@@ -16,8 +16,4 @@
     <ProjectReference Include="..\MovieInfo.Queries\MovieInfo.Queries.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\Actors\" />
-  </ItemGroup>
-
 </Project>

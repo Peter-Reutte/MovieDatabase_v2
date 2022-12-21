@@ -1,4 +1,4 @@
-﻿namespace MovieInfo.Queries.Movies;
+﻿namespace MovieInfo.Queries;
 
 /// <summary>
 /// Интерфейс обработчика запросов

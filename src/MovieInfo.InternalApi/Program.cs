@@ -4,7 +4,6 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Rewrite;
 using MovieInfo.InternalApi;
 using MovieInfo.InternalApi.Extensions;
-using MovieInfo.Infrastructure.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,16 +13,21 @@ builder.Services.AddNpgsqlDbContext<MovieInfo.InternalApi.MigrationDbContext>(db
 
 #region Queries
 
-builder.Services.AddNpgsqlDbContext<MovieInfo.Infrastructure.Queries.MovieDbContext>(dbConnectionString);
+builder.Services.AddNpgsqlDbContext<MovieInfo.Infrastructure.Queries.Movies.MovieDbContext>(dbConnectionString);
+builder.Services.AddNpgsqlDbContext<MovieInfo.Infrastructure.Queries.Actors.ActorDbContext>(dbConnectionString);
 
-builder.Services.AddScoped<GetMoviesListQueryHandler>();
-builder.Services.AddScoped<GetMovieQueryHandler>();
+builder.Services.AddScoped<MovieInfo.Infrastructure.Queries.Movies.GetMoviesListQueryHandler>();
+builder.Services.AddScoped<MovieInfo.Infrastructure.Queries.Movies.GetMovieQueryHandler>();
+builder.Services.AddScoped<MovieInfo.Infrastructure.Queries.Actors.GetActorQueryHandler>();
+builder.Services.AddScoped<MovieInfo.Infrastructure.Queries.Actors.GetActorsListQueryHandler>();
 
 #endregion
 
 builder.Services.AddNpgsqlDbContext<MovieInfo.Infrastructure.Movies.MovieDbContext>(dbConnectionString);
+builder.Services.AddNpgsqlDbContext<MovieInfo.Infrastructure.Actors.ActorDbContext>(dbConnectionString);
 
 builder.Services.AddScoped<MovieInfo.Domain.Movies.IMovieRepository, MovieInfo.Infrastructure.Movies.MovieRepository>();
+builder.Services.AddScoped<MovieInfo.Domain.Actors.IActorRepository, MovieInfo.Infrastructure.Actors.ActorRepository>();
 
 builder.Services.AddControllers()
      .AddFluentValidation(fv =>
